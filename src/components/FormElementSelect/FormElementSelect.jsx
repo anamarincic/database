@@ -15,7 +15,6 @@ export function FormElementSelect(props) {
 
 
 return <form onSubmit={handleSubmit}>
-          <label>Sort by:</label>
           <select value={sortDogs} onChange={handleChange}>
             <option value="descending">Descending(A-Z)</option>
             <option value="ascending">Ascending(Z-A)</option>
