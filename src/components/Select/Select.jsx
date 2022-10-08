@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function FormElementSelect(props) {
+export function Select(props) {
     const [ sortDogs, setSortDogs ] = useState("descending");
 
     function handleSubmit(e) {

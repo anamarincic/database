@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { FormElementSelect } from "./components/FormElementSelect";
-import { FormElementCheckbox } from "./components/FormElementCheckbox";
+import { Select } from "./components/Select";
+import { Checkbox } from "./components/Checkbox";
 
 function App() {
 
@@ -59,8 +59,8 @@ const dataDogs = dogs.map((dog) => (
   return (
     <div className="App">
       <h1>Dogs breed</h1>
-      <FormElementCheckbox data={dogs} onSubmit={changeFilter}/>
-      <FormElementSelect onSubmit={changeSort} />
+      <Checkbox data={dogs} onSubmit={changeFilter}/>
+      <Select onSubmit={changeSort} />
       <ul>
         {filter}
         {sort === "ascending" && dataDogs.reverse()}

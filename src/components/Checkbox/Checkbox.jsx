@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function FormElementCheckbox(props) {
+export function Checkbox(props) {
     const [check, setCheck] = useState([]);
     const data = props.data;
 
