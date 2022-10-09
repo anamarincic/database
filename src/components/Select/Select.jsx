@@ -1,24 +1,16 @@
-import { useState } from "react";
-
 export function Select(props) {
-    const [ sortDogs, setSortDogs ] = useState("descending");
+  const optionElements = props.options.map((option, index) => (
+    <option key={index} value={option.value}>
+      {option.label}
+    </option>
+  ));
 
-    function handleSubmit(e) {
-        e.preventDefault();
-
-        props.onSubmit(sortDogs);  
-    }
-
-    function handleChange (e) {
-       setSortDogs(e.target.value);
-    }
-
-
-return <form onSubmit={handleSubmit}>
-          <select value={sortDogs} onChange={handleChange}>
-            <option value="descending">Descending(A-Z)</option>
-            <option value="ascending">Ascending(Z-A)</option>
-          </select>
-          <button type="submit">Add</button>
-       </form>
+  return (
+    <label>
+      <div className="label">{props.label}</div>
+      <select name={props.name} onChange={props.onChange} value={props.value}>
+        {optionElements}
+      </select>
+    </label>
+  );
 }
