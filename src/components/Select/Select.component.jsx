@@ -6,11 +6,11 @@ export function Select(props) {
   ));
 
   return (
-    <label>
-      <div className="label">{props.label}</div>
-      <select name={props.name} onChange={props.onChange} value={props.value}>
+    <div>
+      <label className="label">{props.label}</label>
+      <select name={props.name} onChange={props.onChange}>
         {optionElements}
       </select>
-    </label>
+    </div>
   );
 }
