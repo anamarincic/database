@@ -28,9 +28,9 @@ export function Form(props) {
   }
 
   function removeFromArray(inputValue) {
-    setFormState((state) =>
-      state.filters.filter((value) => value !== inputValue)
-    );
+    setFormState((state) => ({
+      filters: state.filters.filter((value) => value !== inputValue),
+    }));
   }
 
   const handleChange = (e) => {

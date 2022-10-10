@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { Form } from "./components/Form";
+import { ListOfDogs } from "./components/ListOfDogs";
 
 function App() {
   const [dogs, setDogs] = useState([]);
   const [sort, setSort] = useState("descending");
-  const [filteredDogs, setFilterDogs] = useState([]);
+  const [filter, setFilter] = useState([]);
+  const [filteredDogs, setFilteredDogs] = useState([]);
 
   useEffect(() => {
     (() => {
       return fetch(
-        "https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs.json"
+        `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs.json`
       ).then((response) => {
         return response.json();
       });
@@ -24,39 +26,30 @@ function App() {
 
   const handleSubmit = (e) => {
     setSort(e.sortBy);
-    //setFilter(e.filters);
+    setFilter(e.filters);
     for (const dog of dogs) {
-      if (e.filters && !e.filters.includes(dog.name)) {
+      if (filter && !filter.includes(dog.name)) {
         continue;
       }
-      setFilterDogs((state) => [...state, dog]);
+      setFilteredDogs((state) => [...state, dog]);
     }
   };
 
-  const filter = filteredDogs.map((dog) => (
-    <li key={dog.id}>
-      <h2>{dog.name}</h2>
-      <p>Origin: {dog.origin}</p>
-    </li>
+  const filterDogs = filteredDogs.map((dog) => (
+    <ListOfDogs key={dog.id} name={dog.name} origin={dog.origin} />
   ));
 
   const dataDogs = dogs.map((dog) => (
-    <li key={dog.id}>
-      <h2>{dog.name}</h2>
-      <p>Origin: {dog.origin}</p>
-    </li>
+    <ListOfDogs key={dog.id} name={dog.name} origin={dog.origin} />
   ));
+
+  let displayDogs = dataDogs;
 
   return (
     <div className="App">
       <h1>Dogs breed</h1>
       <Form onSubmit={handleSubmit} dataName={dogs} />
-      <ul>{filter}</ul>
-      <ul>
-        {sort === "ascending"
-          ? dataDogs.reverse()
-          : sort === "descending" && dataDogs.sort()}
-      </ul>
+      <ul>{displayDogs}</ul>
     </div>
   );
 }
