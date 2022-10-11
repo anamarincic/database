@@ -67,7 +67,6 @@ function App() {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         setData(data);
       })
       .catch((error) => {
@@ -75,11 +74,19 @@ function App() {
       });
   };
 
-  const dataDogs = Object.keys(data).map((id) => (
-    <ListOfDogs key={id} name={data[id].name} origin={data[id].origin} />
-  ));
+  let dataDogs;
 
-  //console.log(dataDogs);
+  if (Array.isArray(data)) {
+    dataDogs = data.map((dog) => (
+      <ListOfDogs key={dog.id} name={dog.name} origin={dog.origin} />
+    ));
+  } else {
+    dataDogs = Object.keys(data).map((id) => (
+      <ListOfDogs key={id} name={data[id].name} origin={data[id].origin} />
+    ));
+  }
+
+  console.log(data);
 
   return (
     <div className="App">
