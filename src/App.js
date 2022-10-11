@@ -86,8 +86,6 @@ function App() {
     ));
   }
 
-  console.log(data);
-
   return (
     <div className="App">
       <h1>Dogs breed</h1>
@@ -98,14 +96,9 @@ function App() {
       <ul>{!sort && dataDogs}</ul>
       {sort && (
         <ul>
-          {sortedData.map((dog) => {
-            return (
-              <li key={dog.id}>
-                <h2>{dog.name}</h2>
-                <p>Origin: {dog.origin}</p>
-              </li>
-            );
-          })}
+          {sortedData.map((dog) => (
+            <ListOfDogs key={dog.id} name={dog.name} origin={dog.origin} />
+          ))}
         </ul>
       )}
     </div>
