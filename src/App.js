@@ -3,20 +3,21 @@ import { ListOfDogs } from "./components/ListOfDogs";
 import { Select } from "./components/Select";
 
 function App() {
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   const [sort, setSort] = useState(false);
   const [sortedData, setSortedData] = useState([]);
 
   useEffect(() => {
     (() => {
       return fetch(
-        "https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs.json"
+        `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/breed.json?orderBy="id"&startAt=0&endAt=5`
       ).then((response) => {
         return response.json();
       });
     })()
       .then((data) => {
-        setData(data.breed);
+        setData(Object.values(data));
+        //console.log(Object.values(data));
       })
       .catch((error) => {
         console.log(error);
@@ -44,13 +45,13 @@ function App() {
   const handleClick = (e) => {
     setSort(false);
     fetch(
-      "https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs.json"
+      `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/breed.json?orderBy="id"&startAt=0&endAt=5`
     )
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        setData(data.breed);
+        setData(Object.values(data));
       })
       .catch((error) => {
         console.log(error);
@@ -67,24 +68,16 @@ function App() {
         return response.json();
       })
       .then((data) => {
-        setData(data);
+        setData(Object.values(data));
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  let dataDogs;
-
-  if (Array.isArray(data)) {
-    dataDogs = data.map((dog) => (
-      <ListOfDogs key={dog.id} name={dog.name} origin={dog.origin} />
-    ));
-  } else {
-    dataDogs = Object.keys(data).map((id) => (
-      <ListOfDogs key={id} name={data[id].name} origin={data[id].origin} />
-    ));
-  }
+  const dataDogs = data.map((dog) => (
+    <ListOfDogs key={dog.id} name={dog.name} origin={dog.origin} />
+  ));
 
   return (
     <div className="App">
