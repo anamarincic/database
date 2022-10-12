@@ -1,37 +1,65 @@
 import { useEffect, useState } from "react";
 import { ListOfDogs } from "./components/ListOfDogs";
 import { Select } from "./components/Select";
+import { Pagination } from "./components/Pagination";
 import "./App.css";
 
 function App() {
   const [data, setData] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [sort, setSort] = useState(false);
   const [sortedData, setSortedData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postPerPage] = useState(11);
 
-  /****Fetch data + orderBy***********/
-  let currentPage = 0;
-  let rows = 11;
-
-  const start = currentPage * rows;
-  const end = start + rows;
-
-  const url = `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/breed.json?orderBy="id"&startAt=${start}&endAt=${end}`;
+  ///Get all data
   useEffect(() => {
-    (() => {
-      return fetch(url).then((response) => {
-        return response.json();
-      });
+    (async () => {
+      setLoading(true);
+      const response = await fetch(
+        "https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/breed.json"
+      );
+      return await response.json();
     })()
       .then((data) => {
         //data object into array
         setData(Object.values(data));
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [sort]);
+  }, []);
 
-  /****sorting method********/
+  ///Get current Posts
+
+  const end = currentPage * postPerPage;
+  const start = end - postPerPage;
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      const response = await fetch(
+        `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/breed.json?orderBy="id"&startAt=${start}&endAt=${end}`
+      );
+      return await response.json();
+    })()
+      .then((data) => {
+        setPosts(Object.values(data));
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [currentPage]);
+
+  ///Change page
+  const paginate = (number) => {
+    setCurrentPage(number);
+  };
+
+  ///Sorting method
   const sorting = (property) => {
     let sortOrder = 1;
     if (property[0] === "-") {
@@ -47,27 +75,27 @@ function App() {
 
   const handleChange = (e) => {
     setSort(true);
-    setSortedData(data.sort(sorting(e)));
+    setSortedData(posts.sort(sorting(e)));
   };
 
-  /******Reset Btn*******/
+  ///Reset Btn
   const handleClick = (e) => {
     setSort(false);
     fetch(
-      `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/breed.json?orderBy="id"&startAt=0&endAt=5`
+      `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/breed.json?orderBy="id"&startAt=${start}&endAt=${end}`
     )
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        setData(Object.values(data));
+        setPosts(Object.values(data));
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  /*******Filter method******/
+  ///Filter method
   const filterData = (e) => {
     let filter = e.target.textContent;
     fetch(
@@ -77,14 +105,22 @@ function App() {
         return response.json();
       })
       .then((data) => {
-        setData(Object.values(data));
+        setPosts(Object.values(data));
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  const dataDogs = data.map((dog) => (
+  ///Loading message
+  const loadingData = () => {
+    if (loading) {
+      return <h2>Loading...</h2>;
+    }
+  };
+
+  ///Display posts
+  const dataDogs = posts.map((dog) => (
     <ListOfDogs key={dog.id} name={dog.name} origin={dog.origin} />
   ));
 
@@ -125,12 +161,18 @@ function App() {
         </div>
         <main>
           <ul className="list">
+            {loadingData()}
             {!sort && dataDogs}
             {sort &&
               sortedData.map((dog) => (
                 <ListOfDogs key={dog.id} name={dog.name} origin={dog.origin} />
               ))}
           </ul>
+          <Pagination
+            postPerPage={postPerPage}
+            totalPost={data.length}
+            onClick={paginate}
+          />
         </main>
       </div>
     </div>
