@@ -7,7 +7,7 @@ export function Select(props) {
 
   return (
     <Component
-      label="sort by:"
+      label="Sort by:"
       name="sortBy"
       onChange={handleChange}
       options={[
