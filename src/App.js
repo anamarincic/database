@@ -63,19 +63,24 @@ function App() {
   };
 
   ///Sorting method
-  function sorting(a, b) {
-    if (a.name < b.name) {
-      return -1;
-    }
-    if (a.name > b.name) {
-      return 1;
-    }
-    return 0;
-  }
+  const sorting = (key, order = "asc") => {
+    const sortOrder = order === "asc" ? 1 : -1;
+    return (a, b) => {
+      const A = typeof a[key] === "string" ? a[key].toUpperCase() : a[key];
+      const B = typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
+      if (A < B) {
+        return sortOrder * -1;
+      } else if (A > B) {
+        return sortOrder * 1;
+      } else {
+        return 0;
+      }
+    };
+  };
 
   const handleChange = (e) => {
     setSort(true);
-    setSortedData(posts.sort(sorting));
+    setSortedData(posts.sort(sorting(e, `asc`)));
   };
 
   ///Reset Btn

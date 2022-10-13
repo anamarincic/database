@@ -13,6 +13,7 @@ export function Select(props) {
       options={[
         { value: "id", label: "Choose one" },
         { value: "name", label: "name" },
+        { value: "origin", label: "origin" },
       ]}
     />
   );
