@@ -11,9 +11,8 @@ export function Select(props) {
       name="sortBy"
       onChange={handleChange}
       options={[
-        { value: "", label: "Choose one" },
+        { value: "id", label: "Choose one" },
         { value: "name", label: "name" },
-        { value: "origin", label: "origin" },
       ]}
     />
   );

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ListOfDogs } from "./components/ListOfDogs";
 import { Select } from "./components/Select";
 import { Pagination } from "./components/Pagination";
+import { Button } from "./components/Button";
 import "./App.css";
 
 function App() {
@@ -9,7 +10,9 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sort, setSort] = useState(false);
+  const [filter, setFilter] = useState(false);
   const [sortedData, setSortedData] = useState([]);
+  const [filterPosts, setFilterPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage] = useState(11);
 
@@ -52,7 +55,7 @@ function App() {
       .catch((error) => {
         console.log(error);
       });
-  }, [currentPage]);
+  }, [sort, end, start]);
 
   ///Change page
   const paginate = (number) => {
@@ -60,27 +63,25 @@ function App() {
   };
 
   ///Sorting method
-  const sorting = (property) => {
-    let sortOrder = 1;
-    if (property[0] === "-") {
-      sortOrder = -1;
-      property = property.substr(1);
+  function sorting(a, b) {
+    if (a.name < b.name) {
+      return -1;
     }
-    return function (a, b) {
-      let results =
-        a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
-      return results * sortOrder;
-    };
-  };
+    if (a.name > b.name) {
+      return 1;
+    }
+    return 0;
+  }
 
   const handleChange = (e) => {
     setSort(true);
-    setSortedData(posts.sort(sorting(e)));
+    setSortedData(posts.sort(sorting));
   };
 
   ///Reset Btn
   const handleClick = (e) => {
     setSort(false);
+    setFilter(false);
     fetch(
       `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/breed.json?orderBy="id"&startAt=${start}&endAt=${end}`
     )
@@ -105,24 +106,15 @@ function App() {
         return response.json();
       })
       .then((data) => {
-        setPosts(Object.values(data));
+        setFilter(true);
+        setFilterPosts(Object.values(data));
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  ///Loading message
-  const loadingData = () => {
-    if (loading) {
-      return <h2>Loading...</h2>;
-    }
-  };
-
   ///Display posts
-  const dataDogs = posts.map((dog) => (
-    <ListOfDogs key={dog.id} name={dog.name} origin={dog.origin} />
-  ));
 
   return (
     <div className="App">
@@ -135,42 +127,31 @@ function App() {
             <Select onChange={handleChange} />
           </div>
           <div className="reset">
-            <button
-              className="button reset__button button--hover"
-              onClick={handleClick}>
-              Reset
-            </button>
+            <Button name="reset" title="Reset" onClick={handleClick} />
           </div>
           <div className="filter">
-            <button
-              className="button filter__button button--hover"
-              onClick={filterData}>
-              Croatia
-            </button>
-            <button
-              className="button filter__button button--hover"
-              onClick={filterData}>
-              Germany
-            </button>
-            <button
-              className="button filter__button button--hover"
-              onClick={filterData}>
-              England
-            </button>
+            <Button name="filter" title="Croatia" onClick={filterData} />
+            <Button name="filter" title="Germany" onClick={filterData} />
+            <Button name="filter" title="England" onClick={filterData} />
+            <Button name="filter" title="Japan" onClick={filterData} />
           </div>
         </div>
         <main>
-          <ul className="list">
-            {loadingData()}
-            {!sort && dataDogs}
-            {sort &&
-              sortedData.map((dog) => (
-                <ListOfDogs key={dog.id} name={dog.name} origin={dog.origin} />
-              ))}
-          </ul>
+          {!sort && (
+            <ListOfDogs
+              posts={filter ? filterPosts : posts}
+              loading={loading}
+            />
+          )}
+          {sort && (
+            <ListOfDogs
+              posts={!filter ? sortedData : filterPosts}
+              loading={loading}
+            />
+          )}
           <Pagination
             postPerPage={postPerPage}
-            totalPost={data.length}
+            totalPost={filter ? filterPosts.length : data.length}
             onClick={paginate}
           />
         </main>
