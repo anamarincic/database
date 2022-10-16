@@ -55,7 +55,7 @@ function App() {
       .catch((error) => {
         console.log(error);
       });
-  }, [sort, end, start]);
+  }, [sort, end, start, sortedData]);
 
   ///Change page
   const paginate = (number) => {
