@@ -21,7 +21,7 @@ function App() {
     (async () => {
       setLoading(true);
       const response = await fetch(
-        "https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/breed.json"
+        "https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/groups.json"
       );
       return await response.json();
     })()
@@ -44,11 +44,12 @@ function App() {
     (async () => {
       setLoading(true);
       const response = await fetch(
-        `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/breed.json?orderBy="id"&startAt=${start}&endAt=${end}`
+        `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/groups.json?orderBy="id"&startAt=${start}&endAt=${end}`
       );
       return await response.json();
     })()
       .then((data) => {
+        console.log(data);
         setPosts(Object.values(data));
         setLoading(false);
       })
@@ -88,7 +89,7 @@ function App() {
     setSort(false);
     setFilter(false);
     fetch(
-      `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/breed.json?orderBy="id"&startAt=${start}&endAt=${end}`
+      `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/groups.json?orderBy="id"&startAt=${start}&endAt=${end}`
     )
       .then((response) => {
         return response.json();
@@ -105,7 +106,7 @@ function App() {
   const filterData = (e) => {
     let filter = e.target.textContent;
     fetch(
-      `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/breed.json?orderBy="origin"&equalTo="${filter}"`
+      `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/groups.json?orderBy="purpose"&equalTo="${filter}"`
     )
       .then((response) => {
         return response.json();
@@ -124,7 +125,7 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1 className="header__heading">Dogs breed</h1>
+        <h1 className="header__heading">7 Major Dog Groups</h1>
       </header>
       <div className="wrapper">
         <div className="aside">
@@ -135,10 +136,8 @@ function App() {
             <Button name="reset" title="Reset" onClick={handleClick} />
           </div>
           <div className="filter">
-            <Button name="filter" title="Croatia" onClick={filterData} />
-            <Button name="filter" title="Germany" onClick={filterData} />
-            <Button name="filter" title="England" onClick={filterData} />
-            <Button name="filter" title="Japan" onClick={filterData} />
+            <Button name="filter" title="Working group" onClick={filterData} />
+            <Button name="filter" title="Herding group" onClick={filterData} />
           </div>
         </div>
         <main>
