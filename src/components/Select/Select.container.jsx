@@ -12,7 +12,6 @@ export function Select(props) {
       onChange={handleChange}
       options={[
         { value: "id", label: "Choose one" },
-        { value: "purpose", label: "purpose" },
         { value: "energyLevel", label: "energy-level" },
       ]}
     />

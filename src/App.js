@@ -138,6 +138,15 @@ function App() {
           <div className="filter">
             <Button name="filter" title="Working group" onClick={filterData} />
             <Button name="filter" title="Herding group" onClick={filterData} />
+            <Button name="filter" title="Hound group" onClick={filterData} />
+            <Button name="filter" title="Toy group" onClick={filterData} />
+            <Button name="filter" title="Sporting group" onClick={filterData} />
+            <Button
+              name="filter"
+              title="Non-sporting group"
+              onClick={filterData}
+            />
+            <Button name="filter" title="Terrier group" onClick={filterData} />
           </div>
         </div>
         <main>
