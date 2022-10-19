@@ -1,0 +1,1 @@
+export { FilteredDogs } from "./FilteredDogs";

@@ -3,6 +3,7 @@ import { ListOfDogs } from "./components/ListOfDogs";
 import { Select } from "./components/Select";
 import { Pagination } from "./components/Pagination";
 import { Button } from "./components/Button";
+import { FilteredDogs } from "./components/FilteredDogs";
 import "./App.css";
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
     (async () => {
       setLoading(true);
       const response = await fetch(
-        "https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/groups.json"
+        "https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/allDogs.json"
       );
       return await response.json();
     })()
@@ -44,7 +45,7 @@ function App() {
     (async () => {
       setLoading(true);
       const response = await fetch(
-        `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/groups.json?orderBy="id"&startAt=${start}&endAt=${end}`
+        `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/allDogs.json?orderBy="id"&startAt=${start}&endAt=${end}`
       );
       return await response.json();
     })()
@@ -89,7 +90,7 @@ function App() {
     setSort(false);
     setFilter(false);
     fetch(
-      `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/groups.json?orderBy="id"&startAt=${start}&endAt=${end}`
+      `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/allDogs.json?orderBy="id"&startAt=${start}&endAt=${end}`
     )
       .then((response) => {
         return response.json();
@@ -106,12 +107,13 @@ function App() {
   const filterData = (e) => {
     let filter = e.target.textContent;
     fetch(
-      `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/groups.json?orderBy="purpose"&equalTo="${filter}"`
+      `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/groupOfDogs/${filter}.json`
     )
       .then((response) => {
         return response.json();
       })
       .then((data) => {
+        console.log(data);
         setFilter(true);
         setFilterPosts(Object.values(data));
       })
@@ -136,32 +138,21 @@ function App() {
             <Button name="reset" title="Reset" onClick={handleClick} />
           </div>
           <div className="filter">
-            <Button name="filter" title="Working group" onClick={filterData} />
-            <Button name="filter" title="Herding group" onClick={filterData} />
-            <Button name="filter" title="Hound group" onClick={filterData} />
-            <Button name="filter" title="Toy group" onClick={filterData} />
-            <Button name="filter" title="Sporting group" onClick={filterData} />
-            <Button
-              name="filter"
-              title="Non-sporting group"
-              onClick={filterData}
-            />
-            <Button name="filter" title="Terrier group" onClick={filterData} />
+            <Button name="filter" title="working" onClick={filterData} />
+            <Button name="filter" title="herding" onClick={filterData} />
+            <Button name="filter" title="hound" onClick={filterData} />
+            <Button name="filter" title="toy" onClick={filterData} />
+            <Button name="filter" title="sporting" onClick={filterData} />
+            <Button name="filter" title="nonSporting" onClick={filterData} />
+            <Button name="filter" title="terrier" onClick={filterData} />
           </div>
         </div>
         <main>
-          {!sort && (
-            <ListOfDogs
-              posts={filter ? filterPosts : posts}
-              loading={loading}
-            />
+          {!sort && !filter && <ListOfDogs posts={posts} loading={loading} />}
+          {sort && !filter && (
+            <ListOfDogs posts={sortedData} loading={loading} />
           )}
-          {sort && (
-            <ListOfDogs
-              posts={!filter ? sortedData : filterPosts}
-              loading={loading}
-            />
-          )}
+          {!sort && filter && <FilteredDogs posts={filterPosts} />}
           <Pagination
             postPerPage={postPerPage}
             totalPost={filter ? filterPosts.length : data.length}
