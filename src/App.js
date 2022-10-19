@@ -8,17 +8,18 @@ import "./App.css";
 
 function App() {
   const [data, setData] = useState([]);
-  const [posts, setPosts] = useState([]);
+  // const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sort, setSort] = useState(false);
   const [filter, setFilter] = useState(false);
   const [sortedData, setSortedData] = useState([]);
   const [filterPosts, setFilterPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postPerPage] = useState(11);
+  const [postPerPage] = useState(12);
 
   ///Get all data
   useEffect(() => {
+    console.log("dataa");
     (async () => {
       setLoading(true);
       const response = await fetch(
@@ -41,7 +42,8 @@ function App() {
   const end = currentPage * postPerPage;
   const start = end - postPerPage;
 
-  useEffect(() => {
+  /*  useEffect(() => {
+    console.log("postsss");
     (async () => {
       setLoading(true);
       const response = await fetch(
@@ -50,19 +52,21 @@ function App() {
       return await response.json();
     })()
       .then((data) => {
-        console.log(data);
         setPosts(Object.values(data));
         setLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [sort, end, start, sortedData]);
+  }, [end, start, sortedData]); 
+  */
 
   ///Change page
   const paginate = (number) => {
     setCurrentPage(number);
   };
+
+  const posts = data.slice(start, end);
 
   ///Sorting method
   const sorting = (key, order = "asc") => {
@@ -89,18 +93,6 @@ function App() {
   const handleClick = (e) => {
     setSort(false);
     setFilter(false);
-    fetch(
-      `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/allDogs.json?orderBy="id"&startAt=${start}&endAt=${end}`
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setPosts(Object.values(data));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
 
   ///Filter method
@@ -123,6 +115,9 @@ function App() {
   };
 
   ///Display posts
+  const nameBtn = {
+    name: filter,
+  };
 
   return (
     <div className="App">
@@ -138,13 +133,13 @@ function App() {
             <Button name="reset" title="Reset" onClick={handleClick} />
           </div>
           <div className="filter">
-            <Button name="filter" title="working" onClick={filterData} />
-            <Button name="filter" title="herding" onClick={filterData} />
-            <Button name="filter" title="hound" onClick={filterData} />
-            <Button name="filter" title="toy" onClick={filterData} />
-            <Button name="filter" title="sporting" onClick={filterData} />
-            <Button name="filter" title="nonSporting" onClick={filterData} />
-            <Button name="filter" title="terrier" onClick={filterData} />
+            <Button {...nameBtn} title="working" onClick={filterData} />
+            <Button {...nameBtn} title="herding" onClick={filterData} />
+            <Button {...nameBtn} title="hound" onClick={filterData} />
+            <Button {...nameBtn} title="toy" onClick={filterData} />
+            <Button {...nameBtn} title="sporting" onClick={filterData} />
+            <Button {...nameBtn} title="nonSporting" onClick={filterData} />
+            <Button {...nameBtn} title="terrier" onClick={filterData} />
           </div>
         </div>
         <main>
