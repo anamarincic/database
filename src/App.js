@@ -8,7 +8,6 @@ import "./App.css";
 
 function App() {
   const [data, setData] = useState([]);
-  // const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sort, setSort] = useState(false);
   const [filter, setFilter] = useState(false);
@@ -19,7 +18,6 @@ function App() {
 
   ///Get all data
   useEffect(() => {
-    console.log("dataa");
     (async () => {
       setLoading(true);
       const response = await fetch(
@@ -35,38 +33,7 @@ function App() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
-
-  ///Get current Posts
-
-  const end = currentPage * postPerPage;
-  const start = end - postPerPage;
-
-  /*  useEffect(() => {
-    console.log("postsss");
-    (async () => {
-      setLoading(true);
-      const response = await fetch(
-        `https://dog-related-application-default-rtdb.europe-west1.firebasedatabase.app/dogs/allDogs.json?orderBy="id"&startAt=${start}&endAt=${end}`
-      );
-      return await response.json();
-    })()
-      .then((data) => {
-        setPosts(Object.values(data));
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [end, start, sortedData]); 
-  */
-
-  ///Change page
-  const paginate = (number) => {
-    setCurrentPage(number);
-  };
-
-  const posts = data.slice(start, end);
+  }, [sortedData]);
 
   ///Sorting method
   const sorting = (key, order = "asc") => {
@@ -86,12 +53,27 @@ function App() {
 
   const handleChange = (e) => {
     setSort(true);
-    setSortedData(posts.sort(sorting(e, `asc`)));
+    setSortedData(data.sort(sorting(e, "asc")));
+    console.log(sortedData);
   };
+
+  ///Change page
+
+  const end = currentPage * postPerPage;
+  const start = end - postPerPage;
+
+  const paginate = (number) => {
+    setCurrentPage(number);
+  };
+
+  ///Get current Posts
+  let posts;
+  posts = !sort ? data.slice(start, end) : sortedData.slice(start, end);
 
   ///Reset Btn
   const handleClick = (e) => {
     setSort(false);
+    setSortedData(data.sort(sorting("id", "asc")));
     setFilter(false);
   };
 
@@ -143,11 +125,8 @@ function App() {
           </div>
         </div>
         <main>
-          {!sort && !filter && <ListOfDogs posts={posts} loading={loading} />}
-          {sort && !filter && (
-            <ListOfDogs posts={sortedData} loading={loading} />
-          )}
-          {!sort && filter && <FilteredDogs posts={filterPosts} />}
+          {!filter && <ListOfDogs posts={posts} loading={loading} />}
+          {filter && <FilteredDogs posts={filterPosts} />}
           <Pagination
             postPerPage={postPerPage}
             totalPost={filter ? filterPosts.length : data.length}
