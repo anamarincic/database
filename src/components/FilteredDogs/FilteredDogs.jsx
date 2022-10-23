@@ -1,9 +1,8 @@
 export function FilteredDogs(props) {
-  return (
-    <ul className="list">
-      {props.posts.map((dog) => (
-        <li>{dog}</li>
-      ))}
-    </ul>
-  );
+  const filteredDogs = props.posts.map((dog, index) => (
+    <li key={index} id={dog.id}>
+      {dog}
+    </li>
+  ));
+  return <ul>{filteredDogs}</ul>;
 }

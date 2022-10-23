@@ -11,6 +11,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-size: 1.4rem;
   line-height: 1;
+  box-sizing: border-box;
 }
 
 code {

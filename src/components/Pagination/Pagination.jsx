@@ -9,12 +9,11 @@ export function Pagination(props) {
       <ul className="navigation">
         {pageNumbers.map((number) => (
           <li key={number} className="navigation__item">
-            <a
+            <button
               className="navigation__item__link"
-              onClick={() => props.onClick(number)}
-              href="!#">
+              onClick={() => props.onClick(number)}>
               {number}
-            </a>
+            </button>
           </li>
         ))}
       </ul>
