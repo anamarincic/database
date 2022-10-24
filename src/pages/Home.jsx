@@ -5,6 +5,7 @@ import { Pagination } from "../components/Pagination";
 import { Button } from "../components/Button";
 import { FilteredDogs } from "../components/FilteredDogs";
 import React from "react";
+import { Header } from "../components/Header";
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -103,9 +104,7 @@ export default function Home() {
 
   return (
     <div className="">
-      <header>
-        <h1 className="header__heading">7 Major Dog Groups</h1>
-      </header>
+      <Header />
       <div className="wrapper">
         <div className="aside">
           <div className="sort">
@@ -114,6 +113,7 @@ export default function Home() {
           <div className="reset">
             <Button name="reset" title="Reset" onClick={handleClick} />
           </div>
+          <h3>7 Major Dog Groups</h3>
           <div className="filter">
             <Button {...nameBtn} title="working" onClick={filterData} />
             <Button {...nameBtn} title="herding" onClick={filterData} />

@@ -4,7 +4,11 @@
 header {
   background-color: #ffffff;
   border-radius: 2px;
-  height: 10vh;
+  /*height: 10vh;*/
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 20px;
+  overflow: hidden;
 }
 
 .header__heading {
@@ -14,6 +18,23 @@ header {
   font-family: Georgia, "Times New Roman", Times, serif;
   margin: 0;
   padding-bottom: 12px;
+}
+
+.header__navigation p {
+  text-decoration: none;
+  float: left;
+  font-size: 3vh;
+  margin-right: 3rem;
+}
+
+.header__navigation p:hover {
+  background-color: antiquewhite;
+  color: black;
+}
+
+.header__navigation p.active {
+  background-color: rgba(164, 91, 248, 0.849);
+  color: white;
 }
 
 .wrapper {
@@ -141,4 +162,29 @@ main {
 .navigation__item__link {
   text-decoration: none;
   font-size: 20px;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 25%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  align-self: center;
+}
+
+form {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  text-align: center;
+  margin-top: 10rem;
+}
+
+.add__button {
+  width: 25%;
+  align-self: center;
 }
