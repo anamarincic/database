@@ -1,0 +1,24 @@
+.custom__sort {
+  display: inline-block;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 5px;
+}
+.custom__sort__label {
+  color: rgba(164, 91, 248, 0.849);
+  font-size: 16px;
+  display: inline;
+  margin-right: 5px;
+}
+select {
+  margin: 0;
+  padding: 0.75em 1.5em;
+  font-size: 16px;
+  outline: none;
+  cursor: pointer;
+  border: rgba(164, 91, 248, 0.849);
+  border-radius: 4px;
+  background-color: rgba(164, 91, 248, 0.849);
+  color: white;
+}

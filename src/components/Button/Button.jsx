@@ -1,3 +1,5 @@
+import "./Button.styles.css";
+
 export function Button(props) {
   const btn = "button " + props.name + "__button";
   return (

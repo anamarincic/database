@@ -1,7 +1,8 @@
-import { Button } from "../components/Button";
+import { Button } from "../../components/Button";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Header } from "../components/Header/Header";
+import { Header } from "../../components/Header";
+import "./AddNewDog.styles.css";
 
 const initialState = {
   name: "",
@@ -9,7 +10,7 @@ const initialState = {
   group: "",
 };
 
-export default function AddNewDog() {
+export function AddNewDog() {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [state, setState] = useState(initialState);

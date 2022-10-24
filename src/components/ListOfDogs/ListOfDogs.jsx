@@ -1,5 +1,6 @@
 import { Button } from "../Button";
 import { Link } from "react-router-dom";
+import "./ListOfDogs.styles.css";
 
 export function ListOfDogs(props) {
   if (props.loading) {

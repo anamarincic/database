@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import "./Header.styles.css";
 
 export function Header() {
   const [activeTab, setActiveTab] = useState("Home");

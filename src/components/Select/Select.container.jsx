@@ -1,4 +1,5 @@
 import { Select as Component } from "./Select.component";
+import "./Select.styles.css";
 
 export function Select(props) {
   const handleChange = (e) => {

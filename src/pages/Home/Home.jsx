@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { ListOfDogs } from "../components/ListOfDogs";
-import { Select } from "../components/Select";
-import { Pagination } from "../components/Pagination";
-import { Button } from "../components/Button";
-import { FilteredDogs } from "../components/FilteredDogs";
 import React from "react";
-import { Header } from "../components/Header";
+import { ListOfDogs } from "../../components/ListOfDogs";
+import { Select } from "../../components/Select";
+import { Pagination } from "../../components/Pagination";
+import { Button } from "../../components/Button";
+import { FilteredDogs } from "../../components/FilteredDogs";
+import { Header } from "../../components/Header";
+import "./Home.styles.css";
 
-export default function Home() {
+export function Home() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sort, setSort] = useState(false);

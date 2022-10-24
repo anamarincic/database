@@ -1,3 +1,5 @@
+import "./Pagination.styles.css";
+
 export function Pagination(props) {
   const pageNumbers = [];
 

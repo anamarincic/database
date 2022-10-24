@@ -1,7 +1,6 @@
-import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import AddNewDog from "./pages/AddNewDog";
+import { Home } from "./pages/Home";
+import { AddNewDog } from "./pages/AddNewDog";
 
 function App() {
   return (
