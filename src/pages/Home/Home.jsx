@@ -128,11 +128,13 @@ export function Home() {
         <main>
           {!filter && <ListOfDogs posts={posts} loading={loading} />}
           {filter && <FilteredDogs posts={filterPosts} />}
-          <Pagination
-            postPerPage={postPerPage}
-            totalPost={filter ? filterPosts.length : data.length}
-            onClick={paginate}
-          />
+          {!filter && (
+            <Pagination
+              postPerPage={postPerPage}
+              totalPost={data.length}
+              onClick={paginate}
+            />
+          )}
         </main>
       </div>
     </div>
