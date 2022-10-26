@@ -12,8 +12,6 @@ database(firebase) as data storage.
 
 ## Features
 
-## Features
-
 - [x] Create a new dog
 - [x] Editing existing dogs
 - [x] Paging functionality
