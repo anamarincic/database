@@ -3,8 +3,8 @@ import { observer } from "mobx-react-lite";
 import { useRef } from "react";
 import { DataStore } from "../../Stores/DataStore";
 import "./DogModal.styles.css";
-import { Button } from "../../components/Button";
-import { Header } from "../../components/Header";
+import { Button } from "../../Components/Button";
+import { Header } from "../../Components/Header";
 
 export const DogModal = provider(DataStore)(
   observer(() => {

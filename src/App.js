@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { provider } from "react-ioc";
 import { DogsService } from "./Common/DogsService";
 import { DataStore } from "./Stores/DataStore";
-import { DogsList } from "./Pages/DogsList";
+import { Home } from "./Pages/DogsList";
 import { DogModal } from "./Pages/DogModal";
 
 export const App = provider(
@@ -14,7 +14,7 @@ export const App = provider(
     <BrowserRouter>
       <div className="App">
         <Routes>
-          <Route path="/*" element={<DogsList />} />
+          <Route path="/*" element={<Home />} />
           <Route path="/addNewDog/*" element={<DogModal />} />
           <Route path="/edit/:id/*" element={<DogModal />} />
         </Routes>

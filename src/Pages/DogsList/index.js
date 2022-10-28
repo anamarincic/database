@@ -1,1 +1,1 @@
-export { DogsList } from "./DogsList";
+export { Home } from "./Home";

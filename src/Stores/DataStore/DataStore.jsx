@@ -5,6 +5,8 @@ import { DogsService } from "../../Common/DogsService";
 export class DataStore {
   dogsService = inject(this, DogsService);
   dogsData = [];
+  filterData = [];
+  filterQuery = "";
   constructor() {
     makeAutoObservable(this);
     this.getDogs();
@@ -15,6 +17,23 @@ export class DataStore {
       const data = await this.dogsService.get("allDogs");
       runInAction(() => {
         this.dogsData = Object.values(data);
+      });
+    } catch (error) {
+      runInAction(() => {
+        this.status = "error";
+      });
+    }
+  };
+  getFilteredDogs = async () => {
+    try {
+      var params = {
+        filterQuery: this.filterQuery,
+      };
+      const data = await this.dogsService.get(
+        "groupOfDogs/" + params.filterQuery
+      );
+      runInAction(() => {
+        this.filterData = Object.values(data);
       });
     } catch (error) {
       runInAction(() => {
@@ -40,5 +59,3 @@ export class DataStore {
     }
   };
 }
-
-console.log(DataStore.getDogs);

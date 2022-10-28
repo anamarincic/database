@@ -1,10 +1,11 @@
 import "./FilteredDogs.styles.css";
 
 export function FilteredDogs(props) {
-  const filteredDogs = props.posts.map((dog, index) => (
-    <li key={index} id={dog.id} className="list__item--filtered">
+  const allDogs = props.posts.map((dog) => (
+    <li key={dog.id} className="list__item--filtered" id={dog.id}>
       {dog}
     </li>
   ));
-  return <ul className="list">{filteredDogs}</ul>;
+
+  return <ul className="list">{allDogs}</ul>;
 }
