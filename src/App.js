@@ -1,20 +1,24 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home } from "./pages/Home";
-import { AddNewDog } from "./pages/AddNewDog";
+import { provider } from "react-ioc";
+import { DogsService } from "./Common/DogsService";
+import { DataStore } from "./Stores/DataStore";
+import { DogsList } from "./Pages/DogsList";
+import { DogModal } from "./Pages/DogModal";
 
-function App() {
+export const App = provider(
+  DogsService,
+  DataStore
+  //
+)(() => {
   return (
     <BrowserRouter>
       <div className="App">
         <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/" element={<Home />} />
-          <Route path="/addNewDog" element={<AddNewDog />} />
-          <Route path="/edit/:id" element={<AddNewDog />} />
+          <Route path="/*" element={<DogsList />} />
+          <Route path="/addNewDog/*" element={<DogModal />} />
+          <Route path="/edit/:id/*" element={<DogModal />} />
         </Routes>
       </div>
     </BrowserRouter>
   );
-}
-
-export default App;
+});

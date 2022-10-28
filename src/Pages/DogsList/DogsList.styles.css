@@ -1,3 +1,32 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  height: 90vh;
+}
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 30%;
+  background-color: #eceaea;
+  padding: 0 50px;
+}
+
+.sort {
+  align-self: flex-end;
+}
+
+main {
+  border-radius: 2px 2px 4px 4px;
+  background-color: #e4e3e3;
+  padding: 10px 50px;
+  flex-basis: 70%;
+}
+
+.edit__button {
+  align-self: flex-end;
+}
+
 .list {
   list-style-type: none;
   display: grid;
