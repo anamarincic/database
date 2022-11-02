@@ -1,5 +1,7 @@
 # Dog-related application
 
+https://dog-related-app.netlify.app/
+
 Dog-related-application with paging,sorting and filtering functionality. Using BaaS real-time
 database(firebase) as data storage.
 
