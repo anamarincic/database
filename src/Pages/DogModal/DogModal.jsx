@@ -1,12 +1,11 @@
-import { useInstance, provider } from "react-ioc";
-import { observer } from "mobx-react-lite";
-import { useState } from "react";
 import { DataStore } from "../../Stores/DataStore";
-import "./DogModal.styles.css";
 import { Button } from "../../Components/Button";
 import { Header } from "../../Components/Header";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useInstance, provider } from "react-ioc";
+import { observer } from "mobx-react-lite";
+import { useState, useEffect } from "react";
+import "./DogModal.styles.css";
 
 export const DogModal = provider(DataStore)(
   observer(() => {
@@ -24,6 +23,7 @@ export const DogModal = provider(DataStore)(
     useEffect(() => {
       if (id) {
         if (id >= 0 && id < dataStore.dogsData.length) {
+          dataStore.id = id;
           setState({ ...dog });
         }
       } else {
