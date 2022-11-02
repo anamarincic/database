@@ -7,11 +7,13 @@ export class DataStore {
   dogsData = [];
   filterData = [];
   filterQuery = "";
+
   constructor() {
     makeAutoObservable(this);
     this.getDogs();
     console.log("CREATED: data store");
   }
+
   getDogs = async () => {
     try {
       const data = await this.dogsService.get("allDogs");
@@ -24,6 +26,7 @@ export class DataStore {
       });
     }
   };
+
   getFilteredDogs = async () => {
     try {
       var params = {
@@ -41,6 +44,7 @@ export class DataStore {
       });
     }
   };
+
   createDog = async (model) => {
     try {
       const response = await this.dogsService.put(
@@ -58,6 +62,7 @@ export class DataStore {
       });
     }
   };
+
   updateDog = async (dog) => {
     try {
       const response = await this.dogsService.update(dog, "allDogs/" + this.id);

@@ -6,7 +6,7 @@ import "./DogModal.styles.css";
 import { Button } from "../../Components/Button";
 import { Header } from "../../Components/Header";
 import { useParams } from "react-router-dom";
-import { autorun } from "mobx";
+import { useEffect } from "react";
 
 export const DogModal = provider(DataStore)(
   observer(() => {
@@ -19,14 +19,21 @@ export const DogModal = provider(DataStore)(
     });
     const { name, energyLevel } = state;
     const { id } = useParams();
+    const dog = dataStore.dogsData[id];
 
-    autorun(() => {
+    useEffect(() => {
       if (id) {
-        console.log(id);
+        if (id >= 0 && id < dataStore.dogsData.length) {
+          setState({ ...dog });
+        }
       } else {
-        console.log("no id");
+        setState({ name: "", energyLevel: "" });
       }
-    });
+
+      return () => {
+        setState({ name: "", energyLevel: "" });
+      };
+    }, [id, dataStore, dog]);
 
     const handleInputChange = (e) => {
       console.log(e);

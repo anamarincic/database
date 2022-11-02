@@ -34,7 +34,7 @@ export const Home = provider(DataStore)(
         }
       };
     };
-    console.log(store.dogsData[1]);
+
     const handleChange = (e) => {
       setSort(true);
       setSortedData(store.dogsData.sort(sorting(e, "asc")));

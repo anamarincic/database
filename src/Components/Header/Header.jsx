@@ -7,7 +7,6 @@ export function Header() {
   const location = useLocation();
 
   useEffect(() => {
-    console.log(location.pathname);
     if (location.pathname === "/") {
       setActiveTab("Home");
     } else if (location.pathname === "/addNewDog") {
