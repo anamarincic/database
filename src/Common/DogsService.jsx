@@ -24,4 +24,16 @@ export class DogsService {
     const response = await fetch(request);
     return response;
   };
+  update = async (dog, urlParams) => {
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    var options = {
+      method: "PATCH",
+      headers,
+      body: JSON.stringify(dog),
+    };
+    const request = new Request(webApi + "/" + urlParams + ".json", options);
+    const response = await fetch(request);
+    return response;
+  };
 }

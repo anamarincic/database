@@ -58,4 +58,18 @@ export class DataStore {
       });
     }
   };
+  updateDog = async (dog) => {
+    try {
+      const response = await this.dogsService.update(dog, "allDogs/" + this.id);
+      if (response.status === 200) {
+        runInAction(() => {
+          this.status = "success";
+        });
+      }
+    } catch (error) {
+      runInAction(() => {
+        this.status = "error";
+      });
+    }
+  };
 }

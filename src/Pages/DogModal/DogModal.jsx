@@ -1,46 +1,85 @@
 import { useInstance, provider } from "react-ioc";
 import { observer } from "mobx-react-lite";
-import { useRef } from "react";
+import { useState } from "react";
 import { DataStore } from "../../Stores/DataStore";
 import "./DogModal.styles.css";
 import { Button } from "../../Components/Button";
 import { Header } from "../../Components/Header";
+import { useParams } from "react-router-dom";
+import { autorun } from "mobx";
 
 export const DogModal = provider(DataStore)(
   observer(() => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const dataStore = useInstance(DataStore);
-    const nameRef = useRef(null);
-    const energyLevelRef = useRef(null);
-    const createDog = (e) => {
-      console.log(nameRef.current.value);
+    const [error, setError] = useState(null);
+    const [state, setState] = useState({
+      name: "",
+      energyLevel: null,
+    });
+    const { name, energyLevel } = state;
+    const { id } = useParams();
+
+    autorun(() => {
+      if (id) {
+        console.log(id);
+      } else {
+        console.log("no id");
+      }
+    });
+
+    const handleInputChange = (e) => {
+      console.log(e);
+      const { name, value } = e.target;
+      setState({ ...state, [name]: value });
+    };
+
+    const handleSubmit = (e) => {
       e.preventDefault();
-      dataStore.createDog({
-        name: nameRef.current.value,
-        energyLevel: energyLevelRef.current.value,
-      });
-      nameRef.value = null;
-      energyLevelRef.current.value = null;
+      if (!name || !energyLevel) {
+        setError("Please provide value in each input field");
+      } else {
+        if (id) {
+          dataStore.updateDog({
+            name: state.name,
+            energyLevel: state.energyLevel,
+            id: id,
+          });
+          alert("Dog updated successfully");
+        } else {
+          dataStore.createDog({
+            name: state.name,
+            energyLevel: state.energyLevel,
+            id: dataStore.dogsData.length,
+          });
+          alert("Dog added successfully");
+        }
+      }
     };
     return (
       <div>
         <Header />
-        <form onSubmit={createDog}>
+        <form onSubmit={handleSubmit}>
           <label htmlFor="name">Name:</label>
           <input
             type="text"
             id="name"
-            ref={nameRef}
+            name="name"
+            value={state.name || ""}
             placeholder="Dog's name.."
+            onChange={handleInputChange}
           />
           <label htmlFor="energyLevel">Energy-level:</label>
           <input
             type="number"
             id="energyLevel"
-            ref={energyLevelRef}
+            name="energyLevel"
+            value={state.energyLevel || ""}
             placeholder="Energy level..."
+            onChange={handleInputChange}
           />
-          <Button type="submit" title="Save" name="add" />
+          <Button type="submit" title={id ? "Update" : "Save"} name="add" />
+          {error}
         </form>
       </div>
     );
