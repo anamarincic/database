@@ -14,7 +14,8 @@ export const DogModal = provider(DataStore)(
     const [error, setError] = useState(null);
     const [state, setState] = useState({
       name: "",
-      energyLevel: null,
+      energyLevel: "",
+      group: "",
     });
     const { name, energyLevel } = state;
     const { id } = useParams();
@@ -59,6 +60,8 @@ export const DogModal = provider(DataStore)(
             energyLevel: state.energyLevel,
             id: dataStore.dogsData.length,
           });
+          dataStore.filterQuery = state.group;
+          dataStore.updateGroupOfDogs(state.name);
           alert("Dog added successfully");
         }
       }
@@ -85,6 +88,17 @@ export const DogModal = provider(DataStore)(
             placeholder="Energy level..."
             onChange={handleInputChange}
           />
+          {!id && <label htmlFor="name">Group:</label>}
+          {!id && (
+            <input
+              type="text"
+              id="group"
+              name="group"
+              value={state.group || ""}
+              placeholder="Which group dog belongs.."
+              onChange={handleInputChange}
+            />
+          )}
           <Button type="submit" title={id ? "Update" : "Save"} name="add" />
           {error}
         </form>

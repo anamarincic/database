@@ -65,7 +65,7 @@ export const Home = provider(DataStore)(
     const filterData = (e) => {
       setFilter(true);
       store.filterQuery = e.target.textContent;
-      store.getFilteredDogs();
+      store.getGroupOfDogs();
     };
     return (
       <div>

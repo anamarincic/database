@@ -5,7 +5,6 @@ import { DogsService } from "../../Common/DogsService";
 export class DataStore {
   dogsService = inject(this, DogsService);
   dogsData = [];
-  dogData = [];
   filterData = [];
   filterQuery = "";
   id = null;
@@ -26,7 +25,7 @@ export class DataStore {
       });
     }
   };
-  getFilteredDogs = async () => {
+  getGroupOfDogs = async () => {
     try {
       var params = {
         filterQuery: this.filterQuery,
@@ -63,6 +62,26 @@ export class DataStore {
   updateDog = async (dog) => {
     try {
       const response = await this.dogsService.update(dog, "allDogs/" + this.id);
+      if (response.status === 200) {
+        runInAction(() => {
+          this.status = "success";
+        });
+      }
+    } catch (error) {
+      runInAction(() => {
+        this.status = "error";
+      });
+    }
+  };
+  updateGroupOfDogs = async (dog) => {
+    try {
+      var params = {
+        filterQuery: this.filterQuery,
+      };
+      const response = await this.dogsService.put(
+        dog,
+        "groupOfDogs/" + params.filterQuery + "/" + this.dogsData.length
+      );
       if (response.status === 200) {
         runInAction(() => {
           this.status = "success";
